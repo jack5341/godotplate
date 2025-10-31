@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://ca7ktknrri7gg"]
+
+[ext_resource type="Script" uid="uid://byfqwh4r2g3hd" path="res://Entities/Player/Player.gd" id="1_e5kic"]
+[ext_resource type="PackedScene" uid="uid://dy1u4077bi470" path="res://Entities/Player/art/spider.tscn" id="2_ww0jn"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_1des2"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="3_vweq0"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_an6q6"]
+
+[sub_resource type="Resource" id="Resource_an6q6"]
+script = ExtResource("4_an6q6")
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_e5kic")
+
+[node name="Root Scene" parent="." instance=ExtResource("2_ww0jn")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Cockpit" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Cockpit"]
+physics_interpolation_mode = 1
+transform = Transform3D(1, -3.6946467e-08, 7.923194e-08, 1.7763568e-15, 0.90630776, 0.42261827, -8.742278e-08, -0.42261827, 0.90630776, 6.0414357e-07, 3.2224643, 6.910597)
+
+[node name="PhantomCameraHost" type="Node" parent="Cockpit/Camera3D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("3_vweq0")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(1, -3.6946467e-08, 7.923194e-08, 1.7763568e-15, 0.90630776, 0.42261827, -8.742278e-08, -0.42261827, 0.90630776, 6.0414357e-07, 3.2224643, 6.910597)
+script = ExtResource("3_1des2")
+follow_mode = 6
+follow_target = NodePath("../Root Scene")
+tween_resource = SubResource("Resource_an6q6")
+follow_distance = -7.625
+vertical_rotation_offset = -0.4363323129985824
+spring_length = -7.625
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
